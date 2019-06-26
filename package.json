@@ -1,0 +1,14 @@
+{
+  "name": "n-api-libnl",
+  "version": "0.1.0",
+  "description": "libnl addon for nodejs",
+  "main": "module.js",
+  "scripts": {
+    "start": "node-gyp configure build && node module.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "10.16.0"
+  },
+  "license": "MIT"
+}
