@@ -10,5 +10,8 @@
   "engines": {
     "node": "10.16.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ip-to-int": "^0.3.1"
+  }
 }
