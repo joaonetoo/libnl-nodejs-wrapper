@@ -10,9 +10,8 @@ const bluetoothDevice = 2;
             findAdapter = libnetworkInterfaces.findAdapter(device);
             if (findAdapter > 0) {
                 setTimeout(() => {
-                    findAdapter = JSON.stringify(findAdapter);
-                    findAdapter = JSON.parse(findAdapter);        
                     const gateway = libnetworkInterfaces.getGatewayAdapter(findAdapter);
+                    console.log(gateway, device,findAdapter);
                     if (gateway > 0) {
                         const ip = ipInt(gateway).toIP().toString();
                         const oct = ip.split('.');

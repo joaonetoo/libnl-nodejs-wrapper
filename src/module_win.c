@@ -142,7 +142,7 @@ napi_value GetGatewayAdapter(napi_env env, napi_callback_info info) {
   if (status != napi_ok) {
     napi_throw_error(env, NULL, "Failed to parse arguments");
   }
-  int32_t* ifIndex;
+  int ifIndex;
   status = napi_get_value_int32(env, argv[0], &ifIndex);
 
   /* Some general variables */
