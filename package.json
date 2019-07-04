@@ -1,5 +1,5 @@
 {
-  "name": "n-api-libnl",
+  "name": "route-tools",
   "version": "0.1.0",
   "description": "libnl addon for nodejs",
   "main": "module.js",
