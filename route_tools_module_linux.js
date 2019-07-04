@@ -4,28 +4,31 @@ const bluetoothDevice = 2;
 
 
 function setIpRoute(device, caiNetwork , caiNetworkCIDR) {
-    console.log(caiNetwork);
     const destinationAddres = caiNetwork + '/' + caiNetworkCIDR;
     let result = -1;
+    device = device.substr(0,4).toLocaleLowerCase();
     return new Promise( (resolve, reject) => {
-        const adapterInterfaces = libnetworkInterfaces.listAdapterInterfaces();
-        filteredInterfaces = []
-        adapterInterfaces.forEach(interface => {
-            if(interface.ifName.includes(device)) {
-                filteredInterfaces.push(interface);
-            }
-        });
-        filteredInterfaces.forEach(interface => {
-            result = libnetworkInterfaces.addRoute(destinationAddres, interface.gateway);
-            resolve(result);
-        });
+        setTimeout(() => {
+            const adapterInterfaces = libnetworkInterfaces.listAdapterInterfaces();
+            filteredInterfaces = []
+            adapterInterfaces.forEach(interface => {
+                if (interface.ifName.includes(device)) {
+                    filteredInterfaces.push(interface);
+                }
+            });
+            filteredInterfaces.forEach(interface => {
+                result = libnetworkInterfaces.addRoute(destinationAddres, interface.gateway);
+                resolve(result);
+            });
+        },1500)
     });
 }
 
 function deleteNetRoute(device, caiNetwork, caiNetworkCIDR) {
     let result = -1;
+    device = device.substr(0,4).toLocaleLowerCase();
     return new Promise( (resolve, reject) => {
-        setTimeout( () => {
+        setTimeout(() => {
             const interface = libnetworkInterfaces.listAdapterInterfaces().filter(interface => interface.ifName.includes(device)).pop();
             const caiNetworkAddress = Number(caiNetwork);
             const listNetWorks = [ caiNetworkAddress , caiNetworkAddress + usbDevice, caiNetworkAddress + bluetoothDevice ];
@@ -33,15 +36,15 @@ function deleteNetRoute(device, caiNetwork, caiNetworkCIDR) {
                 listNetWorks.forEach(network => {
                     const fullNetworkAddress = `${network}.0.0.0/${caiNetworkCIDR}`;
                     result = libnetworkInterfaces.deleteRoute(fullNetworkAddress, interface.gateway);
-                    console.log(result);
                 });
                 resolve(result);
             }
-        }, 1000 );
+        }, 1500 );
     });
 }
 
 function deleteGroupRoute(device, caiGroupNetwork, caiNetworkCIDR)  {
+    device = device.substr(0,4).toLocaleLowerCase();
     return new Promise((resolve) => {
         setTimeout(() => {
             const interface = libnetworkInterfaces.listAdapterInterfaces().filter(interface => interface.ifName.includes(device)).pop();
@@ -51,7 +54,7 @@ function deleteGroupRoute(device, caiGroupNetwork, caiNetworkCIDR)  {
                 resolve(routeDeleted);
             }
             resolve(false);
-        }, 1000);
+        }, 1500);
     });
 }
 
