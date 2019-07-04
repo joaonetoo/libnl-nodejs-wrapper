@@ -61,7 +61,7 @@ function deleteGroupRoute(device, caiGroupNetwork)  {
 }
 libnetworkInterfaces.setIpRoute = setIpRoute;
 libnetworkInterfaces.deleteNetRoute = deleteNetRoute;
-/* libnetworkInterfaces.deleteGroupRoute = deleteGroupRoute;
- */
+libnetworkInterfaces.deleteGroupRoute = deleteGroupRoute;
+
 module.exports = libnetworkInterfaces;
 
