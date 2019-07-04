@@ -9,7 +9,7 @@
         ['OS=="win"',
           {
             'sources': [
-              "src/route_tools_linux.c"
+              "src/route_tools_win.c"
             ],
             'include_dirs+':
             [
