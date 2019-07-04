@@ -229,10 +229,10 @@ napi_value AddRoute(napi_env env, napi_callback_info info) {
         napi_throw_error(env, NULL, "Failed to parse arguments");
     }
 
-    int32_t* ifIndex;
-    int32_t* destMask;
-    char* destinationPrefix[MAXDSTADDRESS];
-    char* nextHop[MAXGWADDEESS];
+    int ifIndex;
+    int destMask;
+    char destinationPrefix[MAXDSTADDRESS];
+    char nextHop[MAXGWADDEESS];
     status = napi_get_value_int32(env, argv[0], &ifIndex);
 
     int destinationPrefixSize = MAXDSTADDRESS;
@@ -312,9 +312,9 @@ napi_value DeleteRoute(napi_env env, napi_callback_info info) {
     if (status != napi_ok) {
         napi_throw_error(env, NULL, "Failed to parse arguments");
     }
-    int32_t* ifIndex;
+    int ifIndex;
     status = napi_get_value_int32(env, argv[0], &ifIndex);
-    char* destinationPrefix[MAXDSTADDRESS];
+    char destinationPrefix[MAXDSTADDRESS];
     int destinationPrefixSize = MAXDSTADDRESS;
     size_t* lengthResult;
     status = napi_get_value_string_utf8(env, argv[1], destinationPrefix, destinationPrefixSize, &lengthResult);
