@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "module",
+      "target_name": "route_tools",
       "sources": [
         "src/interfaces.h",
       ],
@@ -9,7 +9,7 @@
         ['OS=="win"',
           {
             'sources': [
-              "src/module_win.c"
+              "src/route_tools_linux.c"
             ],
             'include_dirs+':
             [
@@ -20,7 +20,7 @@
         ['OS=="linux"',
           {
             'sources': [
-              "./src/module.c"
+              "./src/route_tools_linux.c"
             ],
             "include_dirs+": [
                  "/usr/include/libnl3"

@@ -7,9 +7,9 @@ const ipInt = require('ip-to-int');
 let libnetworkInterfaces;
 
 if (process.platform === "win32") {
-    libnetworkInterfaces = require('./module_win')
+    libnetworkInterfaces = require('./route_tools_module_win')
 } else {
-    libnetworkInterfaces = require('./module_linux')
+    libnetworkInterfaces = require('./route_tools_module_linux')
 
 }
 module.exports = libnetworkInterfaces;

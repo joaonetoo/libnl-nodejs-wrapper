@@ -26,7 +26,7 @@ function setIpRoute(device, caiNetwork , caiNetworkCIDR) {
     });
 }
 
-function deleteNetRoute(device, caiNetwork) {
+function deleteNetRoute(device, caiNetwork, caiNetworkCIDR) {
     let result = -1;
     return new Promise( (resolve, reject) => {
         let findAdapter = -1;

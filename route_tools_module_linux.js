@@ -22,7 +22,7 @@ function setIpRoute(device, caiNetwork , caiNetworkCIDR) {
     });
 }
 
-function deleteNetRoute(device, caiNetwork) {
+function deleteNetRoute(device, caiNetwork, caiNetworkCIDR) {
     let result = -1;
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
@@ -31,7 +31,7 @@ function deleteNetRoute(device, caiNetwork) {
             const listNetWorks = [ caiNetworkAddress , caiNetworkAddress + usbDevice, caiNetworkAddress + bluetoothDevice ];
             if (interface) {
                 listNetWorks.forEach(network => {
-                    const fullNetworkAddress = `${network}.0.0.0`;
+                    const fullNetworkAddress = `${network}.0.0.0/${caiNetworkCIDR}`;
                     result = libnetworkInterfaces.deleteRoute(fullNetworkAddress, interface.gateway);
                     console.log(result);
                 });
@@ -41,12 +41,12 @@ function deleteNetRoute(device, caiNetwork) {
     });
 }
 
-function deleteGroupRoute(device, caiGroupNetwork)  {
+function deleteGroupRoute(device, caiGroupNetwork, caiNetworkCIDR)  {
     return new Promise((resolve) => {
         setTimeout(() => {
             const interface = libnetworkInterfaces.listAdapterInterfaces().filter(interface => interface.ifName.includes(device)).pop();
             if (interface) {
-                const fullNetworkAddress = `${caiGroupNetwork}.0.0.0`;
+                const fullNetworkAddress = `${caiGroupNetwork}.0.0.0/${caiNetworkCIDR}`;
                 const routeDeleted = libnetworkInterfaces.deleteRoute(fullNetworkAddress, interface.gateway);
                 resolve(routeDeleted);
             }
@@ -54,6 +54,9 @@ function deleteGroupRoute(device, caiGroupNetwork)  {
         }, 1000);
     });
 }
+
+// setIpRoute('moto', '12.0.0.0', 8)
+// deleteNetRoute('moto', 12, 8)
 
 libnetworkInterfaces.setIpRoute = setIpRoute;
 libnetworkInterfaces.deleteNetRoute = deleteNetRoute;
