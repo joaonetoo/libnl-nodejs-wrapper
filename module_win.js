@@ -2,7 +2,8 @@ const libnetworkInterfaces = require('./build/Release/module');
 const ipInt = require('ip-to-int');
 const usbDevice = 1;
 const bluetoothDevice = 2;
- function setIpRoute(device, caiNetwork , caiNetworkCIDR) {
+
+function setIpRoute(device, caiNetwork , caiNetworkCIDR) {
     let result = -1;
     return new Promise( (resolve, reject) => {
         let findAdapter = -1;
@@ -59,6 +60,7 @@ function deleteGroupRoute(device, caiGroupNetwork)  {
         }, 1000);
     });
 }
+
 libnetworkInterfaces.setIpRoute = setIpRoute;
 libnetworkInterfaces.deleteNetRoute = deleteNetRoute;
 libnetworkInterfaces.deleteGroupRoute = deleteGroupRoute;
