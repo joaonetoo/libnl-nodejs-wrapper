@@ -1,4 +1,4 @@
-const libnetworkInterfaces = require('./build/Release/module');
+const libnetworkInterfaces = require('./build/Release/route_tools');
 const ipInt = require('ip-to-int');
 const usbDevice = 1;
 const bluetoothDevice = 2;
