@@ -49,8 +49,6 @@ function deleteGroupRoute(device, caiGroupNetwork, caiNetworkCIDR)  {
     return new Promise((resolve) => {
         setTimeout(() => {
             const adapterFoundId = libnetworkInterfaces.findAdapter(device);
-            adapterFoundId = JSON.stringify(adapterFoundId);
-            adapterFoundId = JSON.parse(adapterFoundId);
             if (adapterFoundId > 0) {
                 const fullNetworkAddress = `${caiGroupNetwork}.0.0.0`;
                 const routeDeleted = libnetworkInterfaces.deleteRoute(adapterFoundId, fullNetworkAddress);
@@ -60,6 +58,7 @@ function deleteGroupRoute(device, caiGroupNetwork, caiNetworkCIDR)  {
         }, 1000);
     });
 }
+
 
 
 libnetworkInterfaces.setIpRoute = setIpRoute;
