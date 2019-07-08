@@ -3,26 +3,40 @@ const ipInt = require('ip-to-int');
 const usbDevice = 1;
 const bluetoothDevice = 2;
 
-function setIpRoute(device, caiNetwork , caiNetworkCIDR) {
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+function tryAddRoute(device: string, caiNetwork: string , caiNetworkCIDR: number): Promise<number> {
     let result = -1;
     return new Promise( (resolve, reject) => {
         let findAdapter = -1;
-        setTimeout( () => {
-            findAdapter = libnetworkInterfaces.findAdapter(device);
-            if (findAdapter > 0) {
-                setTimeout(() => {
-                    const gateway = libnetworkInterfaces.getGatewayAdapter(findAdapter);
-                    console.log(gateway, device,findAdapter);
-                    if (gateway > 0) {
-                        const ip = ipInt(gateway).toIP().toString();
-                        const oct = ip.split('.');
-                        const ipString = oct[3] + '.' + oct[2] + '.' + oct[1] + '.' + oct[0];
-                        result = libnetworkInterfaces.addRoute(findAdapter, caiNetwork, caiNetworkCIDR, ipString);
-                        resolve(result);
-                    }
-                }, 1500);
+        findAdapter = libnetworkInterfaces.findAdapter(device);
+        if (findAdapter > 0) {
+                const gateway = libnetworkInterfaces.getGatewayAdapter(findAdapter);
+                if (gateway > 0) {
+                    const ip = ipInt(gateway).toIP().toString();
+                    const oct = ip.split('.');
+                    const ipString = oct[3] + '.' + oct[2] + '.' + oct[1] + '.' + oct[0];
+                    result = libnetworkInterfaces.setNetRoute(findAdapter, caiNetwork, caiNetworkCIDR, ipString);
+                }
+        }
+        return resolve(result);        
+    });
+}
+
+
+export function setIpRouteMoto(device: string, caiNetwork: string , caiNetworkCIDR: number, n: number=5): Promise<number> {
+    return new Promise(async (resolve, reject)=>{
+        let result = -1;
+        for(let i=0; i < n; i++) {
+            const vsleep = await sleep( i * 1000);
+            result = await tryAddRoute(device, caiNetwork, caiNetworkCIDR);
+            if(result === 0) {
+                return resolve(result);
             }
-        }, 1000 );
+        }
+        return reject(result);
     });
 }
 
