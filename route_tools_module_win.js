@@ -3,11 +3,11 @@ const ipInt = require('ip-to-int');
 const usbDevice = 1;
 const bluetoothDevice = 2;
 
-function sleep(ms: number) {
+function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-function tryAddRoute(device: string, caiNetwork: string , caiNetworkCIDR: number): Promise<number> {
+function tryAddRoute(device, caiNetwork , caiNetworkCIDR) {
     let result = -1;
     return new Promise( (resolve, reject) => {
         let findAdapter = -1;
@@ -18,7 +18,7 @@ function tryAddRoute(device: string, caiNetwork: string , caiNetworkCIDR: number
                     const ip = ipInt(gateway).toIP().toString();
                     const oct = ip.split('.');
                     const ipString = oct[3] + '.' + oct[2] + '.' + oct[1] + '.' + oct[0];
-                    result = libnetworkInterfaces.setNetRoute(findAdapter, caiNetwork, caiNetworkCIDR, ipString);
+                    result = libnetworkInterfaces.addRoute(findAdapter, caiNetwork, caiNetworkCIDR, ipString);
                 }
         }
         return resolve(result);        
@@ -26,7 +26,7 @@ function tryAddRoute(device: string, caiNetwork: string , caiNetworkCIDR: number
 }
 
 
-export function setIpRouteMoto(device: string, caiNetwork: string , caiNetworkCIDR: number, n: number=5): Promise<number> {
+function setIpRoute(device, caiNetwork , caiNetworkCIDR, n=5) {
     return new Promise(async (resolve, reject)=>{
         let result = -1;
         for(let i=0; i < n; i++) {
